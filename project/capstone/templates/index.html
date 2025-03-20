@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>바이너리 분석 도구</title>
+    <link rel="stylesheet" href="/static/css/style.css" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <div class="container">
+      <h1><a href="index.html">바이너리 분석 도구</a></h1>
+      <hr />
+      <!-- 바이너리 업로드 섹션 -->
+      <section id="upload-section">
+        <h2>바이너리 파일 업로드</h2>
+        <div class="container mt-5 d-flex justify-content-center">
+          <div id="dropzone" class="dropzone">
+            여기에 파일을 드래그하거나 클릭하여 업로드하세요.
+            <input
+              id="fileInput"
+              type="file"
+              class="d-none"
+              accept=".exe, .bin"
+            />
+          </div>
+        </div>
+        <div class="d-flex justify-content-center">
+          <button id="confirmUpload" class="btn btn-primary">확인</button>
+        </div>
+      </section>
+
+      <!-- 서버 디컴파일 진행중 -->
+      <section id="processing-section" style="display: none">
+        <div class="spinner-container">
+          <div class="d-flex flex-column align-items-center">
+            <div class="spinner-border custom-spinner" role="status"></div>
+            <div class="loading-text">Loading...</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 분석 옵션 선택 -->
+      <section id="action-selection" style="display: none">
+        <h2>2. 분석 옵션 선택</h2>
+        <p>디컴파일이 완료되었습니다. 분석 옵션을 선택하세요.</p>
+        <button id="runCodeQL">CodeQL 분석</button>
+        <button id="runFuzzing">퍼징 실행</button>
+      </section>
+
+      <!-- 분석 결과 표시 -->
+      <section id="result-section" style="display: none">
+        <h2>분석 결과</h2>
+        <pre id="analysisResult"></pre>
+        <button id="downloadResult">생성된 코드 다운로드</button>
+      </section>
+    </div>
+
+    <script src="/static/js/script.js"></script>
+  </body>
+</html>
