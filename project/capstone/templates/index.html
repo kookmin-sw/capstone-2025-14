@@ -21,12 +21,22 @@
         <div class="container mt-5 d-flex justify-content-center">
           <div id="dropzone" class="dropzone">
             여기에 파일을 드래그하거나 클릭하여 업로드하세요.
-            <input
-              id="fileInput"
-              type="file"
-              class="d-none"
-              accept=".exe, .bin"
-            />
+            <form
+              id="uploadForm"
+              action="/api/decompile/"
+              method="POST"
+              enctype="multipart/form-data"
+            >
+              {% csrf_token %}
+              <!-- ✅ CSRF 토큰 추가 -->
+              <input
+                id="fileInput"
+                type="file"
+                name="file"
+                accept=".exe, .bin"
+                class="d-none"
+              />
+            </form>
           </div>
         </div>
         <div class="d-flex justify-content-center">
@@ -45,18 +55,52 @@
       </section>
 
       <!-- 분석 옵션 선택 -->
-      <section id="action-selection" style="display: none">
-        <h2>2. 분석 옵션 선택</h2>
-        <p>디컴파일이 완료되었습니다. 분석 옵션을 선택하세요.</p>
-        <button id="runCodeQL">CodeQL 분석</button>
-        <button id="runFuzzing">퍼징 실행</button>
-      </section>
 
       <!-- 분석 결과 표시 -->
-      <section id="result-section" style="display: none">
-        <h2>분석 결과</h2>
-        <pre id="analysisResult"></pre>
-        <button id="downloadResult">생성된 코드 다운로드</button>
+      <!-- 분석 결과 및 다운로드 섹션 -->
+      <section id="result-section" style="display: none" class="mt-5">
+        <!-- 결과 섹션 전체를 중앙 정렬하는 Flex 컨테이너 -->
+        <div
+          style="
+            min-height: 70vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+          "
+        >
+          <h2 class="text-center">디컴파일된 코드</h2>
+          <!-- 코드 박스 컨테이너: 내부에 다운로드 버튼을 절대 위치로 배치 -->
+          <div
+            class="code-box-container"
+            style="position: relative; width: 80%"
+          >
+            <pre
+              id="analysisResult"
+              class="code-box"
+              style="margin: 0; padding: 20px; overflow: auto"
+            ></pre>
+            <!-- 다운로드 버튼: 코드 박스 내부 우측 상단 -->
+            <a
+              id="downloadLink"
+              class="btn btn-success"
+              href="#"
+              download
+              style="position: absolute; top: 10px; right: 10px"
+            >
+              코드 다운로드
+            </a>
+          </div>
+          <!-- 하단에 분석 옵션 버튼들을 중앙 정렬 -->
+          <div
+            class="center-buttons mt-3"
+            style="display: flex; justify-content: center; gap: 20px"
+          >
+            <button id="runCodeQL" class="btn btn-info">CodeQL 분석</button>
+            <button id="runFuzzing" class="btn btn-warning">퍼징 실행</button>
+          </div>
+        </div>
       </section>
     </div>
 

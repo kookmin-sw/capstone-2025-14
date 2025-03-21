@@ -1,3 +1,11 @@
+// CSRF 토큰 가져오기
+function getCSRFToken() {
+  return document.cookie
+    .split("; ")
+    .find((row) => row.startsWith("csrftoken="))
+    ?.split("=")[1];
+}
+
 // dropzone과 파일 입력 요소 참조
 const dropzone = document.getElementById("dropzone");
 const fileInput = document.getElementById("fileInput");
@@ -78,9 +86,12 @@ document.getElementById("confirmUpload").addEventListener("click", function () {
   formData.append("file", file);
 
   // /api/decompile 엔드포인트로 파일 전송 (백엔드에서 디컴파일 수행)
-  fetch("/api/decompile", {
+  fetch("/api/decompile/", {
     method: "POST",
     body: formData,
+    headers: {
+      "X-CSRFToken": getCSRFToken(), // ✅ CSRF 토큰 포함
+    },
   })
     .then((response) => response.json())
     .then((data) => {
@@ -88,7 +99,13 @@ document.getElementById("confirmUpload").addEventListener("click", function () {
 
       // 진행중 섹션 숨기고 분석 옵션 선택 섹션 표시
       document.getElementById("processing-section").style.display = "none";
-      document.getElementById("action-selection").style.display = "block";
+      document.getElementById("analysisResult").textContent =
+        data.decompiledCode;
+      document.getElementById("result-section").style.display = "block";
+      document.getElementById("upload-section").style.display = "none";
+      if (data.downloadUrl) {
+        //document.getElementById("downloadLink").href = data.downloadUrl;
+      }
     })
     .catch((err) => {
       console.error(err);
