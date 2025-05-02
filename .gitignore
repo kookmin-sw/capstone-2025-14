@@ -1,0 +1,6 @@
+codeql_query/
+codeqlResult/
+sample/
+taint_test/
+demo.py
+taint.py
