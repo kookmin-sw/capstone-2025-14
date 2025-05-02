@@ -3,11 +3,10 @@ from django.views.decorators.csrf import ensure_csrf_cookie
 from .decompile import *
 from .downloadFile import download_decompiled_file
 from .codeql_view import codeql_result
-import os
-
+from .taint_view import taint_func
+from config import *
 @ensure_csrf_cookie
 def index(request):
-    # 템플릿 이름만 사용
     return render(request, 'index.html')
 
 def decompiled(request):
@@ -15,9 +14,11 @@ def decompiled(request):
     print("Response from decompile:", response)
     return response
 
-# filename 매개변수 추가
 def download(request, filename):
     return download_decompiled_file(request, filename)
 
 def codeql(request, filename):
     return codeql_result(request, filename)
+
+def taint(request, filename):
+    return taint_func(request, filename)

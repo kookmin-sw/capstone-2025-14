@@ -1,10 +1,7 @@
 
-
-
 import csv
 import time
 from django.http import JsonResponse
-from django.conf import settings
 from config import *
 import sys
 sys.path.append(CURRENT_DIR)
@@ -13,16 +10,16 @@ from LLM4Module.codeql import *
 columns = ["Name", "Description", "Severity", "Message", "Path", 
            "Start line", "Start column", "End line", "End column"]
 
-def codeql_result(request, filename):
-    if request.method == "POST":
+def taint_func(request, filename):
+    if request.method=="POST":
         input_file = f"{filename}.c"
         input_root = INPUT_ROOT
-        output_file = CODEQL_OUTPUT_DIR
-        codeql = CodeQL(source_file=input_file, source_root=input_root, result_dir=output_file)
-        codeql.static_run()
-        parsed_data = []  # 변환된 데이터를 저장할 리스트
+        output_file = TAINT_OUTPUT_DIR
+        taint = CodeQL(source_file=input_file, source_root=input_root, result_dir=output_file)     
+        taint.taint_run()
+        parsed_data = []
         time.sleep(10)
-        with open(output_file+"output_security_extended.csv", mode="r", encoding="utf-8") as file:
+        with open(output_file+"output_taint_extended.csv", mode="r", encoding="utf-8") as file:
             reader = csv.reader(file)  # 헤더 없이 읽기
             for row in reader:
                 if len(row) == len(columns):

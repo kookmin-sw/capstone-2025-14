@@ -1,11 +1,19 @@
-import sys
-sys.path.append('/home/user/codebugger')
+
 import os
 import io
 import subprocess
 from django.http import JsonResponse
 from django.conf import settings
 from elftools.elf.elffile import ELFFile
+import sys
+import os
+
+CURRENT_DIR = os.path.dirname(os.path.abspath(__file__))
+PARENT_DIR = os.path.abspath(os.path.join(CURRENT_DIR, "../../"))
+
+sys.path.append(PARENT_DIR)
+from config import *
+sys.path.append(CURRENT_DIR)
 from LLM4Module.Analyzer import *
 from LLM4Module.Decompiler import *
 
@@ -93,12 +101,12 @@ def run_decompiler(file_path):#def tmp(file_path):
     try:
         #LLM decompile 실행
         test = GhidraAnalyzer(file_path=file_path,
-                              ghidra_path="/home/user/ghidra_11.0.3_PUBLIC/support/analyzeHeadless",
-                              decompile_script="/home/user/codebugger/LLM4Module/decompile.py",
-                              parse_script="/home/user/codebugger/LLM4Module/parse_global.py",)
+                              ghidra_path=GHIDRA_PATH,
+                              decompile_script=DECOMPILE_SCRIPT_PATH,
+                              parse_script=PARSE_SCRIPT_PATH,)
         test.decompile()
 
-        decompiler = GhidraDecompiler(model_path="/home/user/codebugger/llm4decompile-22b-v2", analyzer=test)
+        decompiler = GhidraDecompiler(model_path=MODEL_PATH, analyzer=test)
         decompiler.decompile(output_path=decompiled_output_to_move)
     except subprocess.CalledProcessError as e:
         print(f"Command execution failed: {str(e)}")

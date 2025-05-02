@@ -124,45 +124,21 @@ document.getElementById("confirmUpload").addEventListener("click", function () {
     });
 });
 
-// CodeQL 분석 선택
-//document.getElementById("runCodeQL").addEventListener("click", function () {
-//  fetch(`/capstone/api/codeql/${window.uploadedFileName}/`, {
-//    method: "POST",
-//    headers: {
-//      "Content-Type": "application/json",
-//      "X-CSRFToken": getCSRFToken(), 
-//    },
-//    body: JSON.stringify({ code: window.decompiledCode }),
-//  })
-//    .then((response) => response.json())
-//    .then((data) => {
-//      // 분석 결과 표시
-//      const analysisResult = document.getElementById("analysisResult");
-//      analysisResult.textContent = JSON.stringify(data, null, 2);
-//      Prism.highlightElement(analysisResult);
-//      window.generatedCode = data.generatedCode;
-//    })
-//    .catch((err) => {
-//      console.error(err);
-//      alert("CodeQL 분석 중 오류가 발생했습니다.");
-//    });
-//});
-
-
-/**
- * CodeQL을 실행해서
- * 1) 기존 <code> 안의 C 코드는 그대로 두고,
- * 2) 취약점 라인만 Prism으로 하이라이트(연한 빨간색),
- * 3) JSON 결과는 #vuln-results 에만 렌더합니다.
- */
-// script.js
+function clearHighlightsForSource(source) {
+  document.querySelectorAll(`.line-highlight[data-source="${source}"]`)
+    .forEach(el => {
+      // 툴팁 인스턴스가 붙어 있으면 해제
+      if (el._tooltip) el._tooltip.dispose();
+      el.remove();
+    });
+}
 
 function runCodeQL() {
   if (!fileInput.files.length) {
     alert('먼저 파일을 업로드하세요.');
     return;
   }
-
+  clearHighlightsForSource('codeql');
   const fd = new FormData();
   fd.append('file', fileInput.files[0]);
 
@@ -224,6 +200,126 @@ function runCodeQL() {
 
         // 5) Prism 기본 !important 덮어쓰기
         hl.style.setProperty('background-color', bgColor, 'important');
+        hl.dataset.source = 'codeql';
+        // 6) 툴팁 컨텐츠 준비
+        const name = info.Name || '';
+        const desc = info.Description || '';
+        const msg  = info.Message || '';
+        const html = `
+          <div class="tooltip-content">
+            <div class="tooltip-section">
+              <div class="tooltip-label">Name</div>
+              <div class="tooltip-desc">${name}</div>
+            </div>
+            <hr class="tooltip-divider" />
+            <div class="tooltip-section">
+              <div class="tooltip-label">Description</div>
+              <div class="tooltip-desc">${desc}</div>
+            </div>
+            <hr class="tooltip-divider" />
+            <div class="tooltip-section">
+              <div class="tooltip-label">Message</div>
+              <div class="tooltip-desc">${msg}</div>
+            </div>
+          </div>
+        `;
+
+        // 7) tooltip 설정
+        hl.removeAttribute('title');
+        hl.setAttribute('data-bs-html', 'true');
+        hl.setAttribute('data-bs-original-title', html);
+        hl.setAttribute('data-bs-toggle',    'tooltip');
+        hl.setAttribute('data-bs-placement', 'top');
+        hl.setAttribute('data-bs-container', 'body');
+
+        new bootstrap.Tooltip(hl, {
+          container: 'body',
+          trigger:   'hover',
+          html:      true
+        });
+      });
+    }, 0);
+
+    // 결과 리스트 숨김
+    document.getElementById('vuln-results').style.display = 'none';
+  })
+  .catch(err => {
+    console.error(err);
+    alert('CodeQL 분석 중 오류가 발생했습니다.');
+  });
+}
+
+// 생성된 코드 다운로드 (추가 다운로드 버튼이 있을 경우)
+function downloadCode() {
+  // <pre> 안의 <code> 요소를 찾아서 그 안의 텍스트를 가져옴
+  const codeElement = document.querySelector("#analysisResult");
+  const codeText = codeElement ? codeElement.innerText.trim() : "";
+  const originalName = window.uploadedFileName || "code";
+  const downloadFileName = originalName + ".c";
+  // 텍스트 파일(blob) 생성 및 다운로드 실행
+  const blob = new Blob([codeText], { type: "text/plain" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = downloadFileName; // 다운로드할 파일명 지정
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+
+function runTaint(){
+  if (!fileInput.files.length) {
+    alert('먼저 파일을 업로드하세요.');
+    return;
+  }
+  clearHighlightsForSource('codeql');
+  clearHighlightsForSource('taint');
+  const fd = new FormData();
+  fd.append('file', fileInput.files[0]);
+
+  fetch(`/capstone/api/taint/${window.uploadedFileName}/`, {
+    method: 'POST',
+    headers: { 'X-CSRFToken': getCSRFToken() },
+    body: fd
+  })
+  .then(res => {
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    return res.json();
+  })
+  .then(data => {
+    // 1) Severity가 있는 항목만 뽑아서 lines 생성
+    const lines = Array.from(new Set(
+      data
+        .filter(item => item['Start line'] && item.Severity)
+        .map(item => parseInt(item['Start line'], 10))
+        .filter(n => !isNaN(n))
+    )).sort((a, b) => a - b);
+
+    // 2) Prism에 data-line 갱신 후 재하이라이트
+    const pre = document.getElementById('source-code');
+    pre.setAttribute('data-line', lines.join(','));
+    Prism.highlightElement(pre.querySelector('code'));
+
+    // 3) 하이라이트 overlay 생성 후 툴팁·색상 적용
+    setTimeout(() => {
+      lines.forEach(line => {
+        const info = data.find(d => +d['Start line'] === line);
+        if (!info || !info.Severity) {
+          const maybeHl = document.querySelector(`.line-highlight[data-range="${line}"]`);
+          if (maybeHl) maybeHl.remove();
+          return;
+        }
+
+        // 4) Severity별 색상 결정
+        let bgColor = 'rgba(255,   0,   0, 0.3)';
+
+        const hl = document.querySelector(`.line-highlight[data-range="${line}"]`);
+        if (!hl) return;
+
+        // 5) Prism 기본 !important 덮어쓰기
+        hl.style.setProperty('background-color', bgColor, 'important');
+        hl.dataset.source = 'taint';
 
         // 6) 툴팁 컨텐츠 준비
         const name = info.Name || '';
@@ -273,24 +369,16 @@ function runCodeQL() {
   });
 }
 
+document.addEventListener("DOMContentLoaded", () => {
+  const title = document.getElementById("title");
+  const uploadSection = document.getElementById("upload-section");
 
+  setTimeout(() => {
+    title.style.top = "0";
+    title.style.opacity = "1";
+  }, 500);
 
-// 생성된 코드 다운로드 (추가 다운로드 버튼이 있을 경우)
-function downloadCode() {
-  // <pre> 안의 <code> 요소를 찾아서 그 안의 텍스트를 가져옴
-  const codeElement = document.querySelector("#analysisResult");
-  const codeText = codeElement ? codeElement.innerText.trim() : "";
-  const originalName = window.uploadedFileName || "code";
-  const downloadFileName = originalName + ".c";
-  // 텍스트 파일(blob) 생성 및 다운로드 실행
-  const blob = new Blob([codeText], { type: "text/plain" });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement("a");
-  a.href = url;
-  a.download = downloadFileName; // 다운로드할 파일명 지정
-  document.body.appendChild(a);
-  a.click();
-  document.body.removeChild(a);
-  URL.revokeObjectURL(url);
-}
-
+  setTimeout(() => {
+    uploadSection.style.opacity = "1";
+  }, 1500);
+});
