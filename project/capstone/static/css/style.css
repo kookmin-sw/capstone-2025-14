@@ -1,0 +1,270 @@
+/* html과 body에 배경색을 어두운 검은색으로 지정 */
+html,
+body {
+  background: #000 !important;
+  margin: 0;
+  padding: 0;
+  font-family: Arial, sans-serif;
+}
+
+/* 가장 바깥의 컨테이너: 코드 박스보다 더 짙은 회색 (#222) */
+.container {
+  max-width: 800px;
+  margin: 50px auto;
+  padding: 20px;
+  background: #222;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  margin-bottom: 10px;
+  color: #fff;
+}
+
+h1,
+h2 {
+  text-align: center;
+  color: #fff;
+}
+
+input[type="file"] {
+  display: block;
+  margin: 0 auto 20px auto;
+}
+
+/* 코드 박스 스타일: 컨테이너보다 밝은 회색 (#333) */
+.code-box {
+  background-color: #333;
+  padding: 20px;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  font-family: "Courier New", Courier, monospace;
+  color: #fff;
+}
+
+/* 코드 박스 컨테이너 내 메뉴바 */
+.code-box-container {
+  position: relative;
+}
+
+.code-header {
+  background-color: #444;
+  color: #fff;
+  padding: 10px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+}
+
+.language-label {
+  font-size: small;
+  font-weight: bold;
+}
+
+/* 헤더 오른쪽 영역: 두 버튼 나란히 배치 */
+.header-right {
+  display: flex;
+  gap: 10px;
+}
+
+/* 커스텀 버튼 스타일 */
+/* 기본 상태에서는 border가 투명하여 구분이 없고, hover 시 미세한 border가 나타남 */
+.download-btn,
+.custom-btn {
+  background-color: #444;
+  border: 1px solid transparent;
+  color: #fff;
+  padding: 8px 16px;
+  border-radius: 3px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s, border-color 0.3s;
+}
+
+.download-btn:hover,
+.custom-btn:hover {
+  background-color: #555;
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+/* 스피너 및 로딩 텍스트 */
+.spinner-container {
+  width: 100%;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.custom-spinner {
+  width: 10rem !important;
+  height: 10rem !important;
+  border-width: 0.5rem;
+  animation-duration: 3s;
+}
+
+.loading-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 1.2rem;
+  color: #007bff;
+  font-weight: bold;
+}
+
+/* 드래그 앤 드롭 파일 관련 스타일 */
+.dropzone {
+  display: flex;
+  border: 2px dashed #007bff;
+  border-radius: 5px;
+  padding: 20px;
+  text-align: center;
+  color: #6c757d;
+  transition: background-color 0.3s;
+  width: 800px;
+  height: 200px;
+  align-items: center;
+  justify-content: center;
+}
+
+.dropzone.dragover {
+  background-color: #e9ecef;
+}
+
+/* 파일 업로드 관련 추가 스타일 */
+.files input {
+  outline: 2px dashed #92b0b3;
+  outline-offset: -10px;
+  -webkit-transition: outline-offset 0.15s ease-in-out,
+    background-color 0.15s linear;
+  transition: outline-offset 0.15s ease-in-out, background-color 0.15s linear;
+  padding: 120px 0px 85px 35%;
+  text-align: center !important;
+  margin: 0;
+  width: 100% !important;
+}
+.files input:focus {
+  outline: 2px dashed #92b0b3;
+  outline-offset: -10px;
+  -webkit-transition: outline-offset 0.15s ease-in-out,
+    background-color 0.15s linear;
+  transition: outline-offset 0.15s ease-in-out, background-color 0.15s linear;
+  border: 1px solid #92b0b3;
+}
+.files {
+  position: relative;
+}
+.files:after {
+  pointer-events: none;
+  position: absolute;
+  top: 60px;
+  left: 0;
+  width: 50px;
+  right: 0;
+  height: 56px;
+  content: "";
+  display: block;
+  margin: 0 auto;
+  background-size: 100%;
+  background-repeat: no-repeat;
+}
+.color input {
+  background-color: #f1f1f1;
+}
+.files:before {
+  position: absolute;
+  bottom: 10px;
+  left: 0;
+  pointer-events: none;
+  width: 100%;
+  right: 0;
+  height: 57px;
+  content: " or drag it here. ";
+  display: block;
+  margin: 0 auto;
+  color: #2ea591;
+  font-weight: 600;
+  text-transform: capitalize;
+  text-align: center;
+}
+
+
+/* Prism line-highlight 플러그인이 생성하는 overlay */
+pre.line-numbers .line-highlight {
+  background: rgba(255, 0, 0, 0.1) !important;
+}
+
+/* 툴팁용 커서 모양 */
+pre.line-numbers .line-highlight {
+  cursor: help;
+}
+
+/* Prism line-highlight 기본 색을 연한 빨간색으로 커스터마이즈 */
+pre.line-numbers .line-highlight {
+  background: rgba(255, 0, 0, 0.1) !important;
+  cursor: help;
+}
+
+
+
+/* 기타 페이지 레이아웃 */
+body {
+  background: #121212;
+  color: #eee;
+}
+.container {
+  max-width: 900px;
+}
+
+/* line-highlight overlay에 포인터 이벤트 허용 */
+pre.line-numbers .line-highlight {
+  pointer-events: auto !important;
+}
+
+/* 툴팁 전체 */
+.tooltip .tooltip-inner {
+  background-color: #111 !important; /* 짙은 검정 계열 */
+  color:            #eee !important; /* 설명 텍스트 색 */
+  max-width:        280px;           /* 필요에 따라 조절 */
+  padding:          0.6rem 0.8rem;
+  text-align:       left;
+  font-size:        0.85rem;
+  line-height:      1.4;
+}
+
+/* 레이블(Name/Desc/Msg) */
+.tooltip .tooltip-inner .tooltip-label {
+  font-weight: bold;
+  font-size: 1rem;     /* 설명보다 크도록 */
+  margin-bottom: 0.25rem;
+}
+
+/* 설명 텍스트 */
+.tooltip .tooltip-inner .tooltip-desc {
+  font-weight: normal;
+  font-size: 0.85rem;
+  margin-bottom: 0.5rem;
+}
+
+/* 레이블/텍스트 묶음 사이 구분선 */
+.tooltip .tooltip-inner .tooltip-divider {
+  border: none;
+  border-top: 1px solid rgba(255,255,255,0.2);
+  margin: 0.4rem 0;
+}
+
+/* 화살표도 같은 색으로 맞추기 */
+.tooltip.bs-tooltip-top .tooltip-arrow::before {
+  border-top-color: #111 !important;
+}
+.tooltip.bs-tooltip-bottom .tooltip-arrow::before {
+  border-bottom-color: #111 !important;
+}
+.tooltip.bs-tooltip-start .tooltip-arrow::before {
+  border-left-color: #111 !important;
+}
+.tooltip.bs-tooltip-end .tooltip-arrow::before {
+  border-right-color: #111 !important;
+}
+
