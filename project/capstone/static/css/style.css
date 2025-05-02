@@ -1,4 +1,5 @@
 /* html과 body에 배경색을 어두운 검은색으로 지정 */
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&display=swap');
 html,
 body {
   background: #000 !important;
@@ -103,14 +104,20 @@ input[type="file"] {
   animation-duration: 3s;
 }
 
+/* Loading... typing and deleting animation */
 .loading-text {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
   font-size: 1.2rem;
-  color: #007bff;
-  font-weight: bold;
+  color: var(--loading-color);
+  white-space: nowrap;
+  overflow: hidden;
+  border-right: 2px solid var(--loading-color);
+  width: 0;
+  animation: typing 2s steps(8) infinite alternate;
+}
+@keyframes typing {
+  0%   { width: 0; }
+  50%  { width: 8ch; }
+  100% { width: 0; }
 }
 
 /* 드래그 앤 드롭 파일 관련 스타일 */
@@ -189,7 +196,6 @@ input[type="file"] {
   text-align: center;
 }
 
-
 /* Prism line-highlight 플러그인이 생성하는 overlay */
 pre.line-numbers .line-highlight {
   background: rgba(255, 0, 0, 0.1) !important;
@@ -205,8 +211,6 @@ pre.line-numbers .line-highlight {
   background: rgba(255, 0, 0, 0.1) !important;
   cursor: help;
 }
-
-
 
 /* 기타 페이지 레이아웃 */
 body {
@@ -268,3 +272,14 @@ pre.line-numbers .line-highlight {
   border-right-color: #111 !important;
 }
 
+#title {
+  position: relative;
+  top: 50px; /* 초기 위치 */
+  opacity: 0;
+  transition: all 1.5s ease-in-out;
+}
+
+#upload-section {
+  opacity: 0;
+  transition: opacity 1.5s ease-in-out;
+}

@@ -23,5 +23,6 @@ urlpatterns = [
     path('capstone/', views.index, name='index'),
     path('capstone/api/decompile/', views.decompiled, name='decompiled'),
     path('capstone/api/download/<str:filename>/', views.download, name='download_decompiled_file'),
-    path('capstone/api/codeql/<str:filename>/',views.codeql, name='codeql')
+    path('capstone/api/codeql/<str:filename>/',views.codeql, name='codeql'),
+    path('capstone/api/taint/<str:filename>/',views.taint, name='taint'),
 ]
