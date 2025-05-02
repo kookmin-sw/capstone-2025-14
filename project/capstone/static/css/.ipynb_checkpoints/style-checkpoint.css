@@ -1,0 +1,163 @@
+body {
+  font-family: Arial, sans-serif;
+  background: #f5f5f5;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  max-width: 800px;
+  margin: 50px auto;
+  padding: 20px;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  margin-bottom: 10px;
+}
+
+h1,
+h2 {
+  text-align: center;
+}
+
+input[type="file"] {
+  display: block;
+  margin: 0 auto 20px auto;
+}
+
+button {
+  display: block;
+  margin: 10px auto;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+button#confirmUpload {
+  display: inline-block;
+  text-align: center;
+  margin: 0 auto;
+}
+
+pre {
+  background: #eee;
+  padding: 10px;
+  border-radius: 4px;
+  overflow: auto;
+}
+
+a {
+  text-decoration-line: none !important;
+}
+
+.files input {
+  outline: 2px dashed #92b0b3;
+  outline-offset: -10px;
+  -webkit-transition: outline-offset 0.15s ease-in-out,
+    background-color 0.15s linear;
+  transition: outline-offset 0.15s ease-in-out, background-color 0.15s linear;
+  padding: 120px 0px 85px 35%;
+  text-align: center !important;
+  margin: 0;
+  width: 100% !important;
+}
+.files input:focus {
+  outline: 2px dashed #92b0b3;
+  outline-offset: -10px;
+  -webkit-transition: outline-offset 0.15s ease-in-out,
+    background-color 0.15s linear;
+  transition: outline-offset 0.15s ease-in-out, background-color 0.15s linear;
+  border: 1px solid #92b0b3;
+}
+.files {
+  position: relative;
+}
+.files:after {
+  pointer-events: none;
+  position: absolute;
+  top: 60px;
+  left: 0;
+  width: 50px;
+  right: 0;
+  height: 56px;
+  content: "";
+  display: block;
+  margin: 0 auto;
+  background-size: 100%;
+  background-repeat: no-repeat;
+}
+.color input {
+  background-color: #f1f1f1;
+}
+.files:before {
+  position: absolute;
+  bottom: 10px;
+  left: 0;
+  pointer-events: none;
+  width: 100%;
+  right: 0;
+  height: 57px;
+  content: " or drag it here. ";
+  display: block;
+  margin: 0 auto;
+  color: #2ea591;
+  font-weight: 600;
+  text-transform: capitalize;
+  text-align: center;
+}
+.custom-spinner {
+  width: 10rem !important; /* 크기 지정 */
+  height: 10rem !important;
+  border-width: 0.5rem; /* 테두리 두께 */
+  align-items: center;
+  justify-content: center;
+  animation-duration: 3s;
+}
+.spinner-container {
+  position: relative; /* 텍스트를 로딩바 중앙에 배치하기 위한 기준 */
+  display: inline-block; /* 로딩바와 텍스트를 묶어서 중앙 배치 */
+}
+.loading-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 1.2rem;
+  color: #007bff;
+  font-weight: bold;
+}
+/* style.css */
+.dropzone {
+  display: flex;
+  border: 2px dashed #007bff;
+  border-radius: 5px;
+  padding: 20px;
+  text-align: center;
+  color: #6c757d;
+  transition: background-color 0.3s;
+  width: 800px;
+  height: 200px;
+  align-items: center;
+  justify-content: center;
+}
+
+.dropzone.dragover {
+  background-color: #e9ecef;
+}
+.code-box {
+  background-color: #f8f9fa;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  max-width: 80%;
+  min-height: 200px;
+  overflow: auto;
+  text-align: left;
+}
+
+#processing-section {
+  display: flex; /* 플렉스 컨테이너 활성화 */
+  justify-content: center; /* 수평 중앙 정렬 */
+  align-items: center; /* 수직 중앙 정렬 */
+  height: 100vh; /* 섹션 높이를 화면 전체로 설정 */
+}

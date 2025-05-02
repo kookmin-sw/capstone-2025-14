@@ -1,34 +1,60 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="ko">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>바이너리 분석 도구</title>
-    <link rel="stylesheet" href="/static/css/style.css" />
+
+    <!-- Prism 테마 -->
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css"
+      rel="stylesheet"
+    />
+
+    <!-- Prism 플러그인: Line Numbers -->
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.css"
+      rel="stylesheet"
+    />
+    <!-- Prism 플러그인: Line Highlight -->
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/line-highlight/prism-line-highlight.min.css"
+      rel="stylesheet"
+    />
+
+    <!-- 커스텀 스타일 -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+
+    <!-- Bootstrap CSS -->
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
       rel="stylesheet"
     />
   </head>
   <body>
+    <!-- Bootstrap JS (툴팁 필요) -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <div class="container">
-      <h1><a href="index.html">바이너리 분석 도구</a></h1>
+
+    <div class="container py-4">
+      <section id="intro-section">
+      <h1><a href="{% url 'index' %}" style="text-decoration:none;">바이너리 분석 도구</a></h1>
       <hr />
-      <!-- 바이너리 업로드 섹션 -->
+    </section>
+
+      <!-- 1) 업로드 섹션 (변경 없음) -->
       <section id="upload-section">
         <h2>바이너리 파일 업로드</h2>
-        <div class="container mt-5 d-flex justify-content-center">
+        <div class="mt-5 d-flex justify-content-center">
           <div id="dropzone" class="dropzone">
             여기에 파일을 드래그하거나 클릭하여 업로드하세요.
             <form
               id="uploadForm"
-              action="/api/decompile/"
+              action="/capstone/api/decompile/"
               method="POST"
               enctype="multipart/form-data"
             >
               {% csrf_token %}
-              <!-- ✅ CSRF 토큰 추가 -->
               <input
                 id="fileInput"
                 type="file"
@@ -39,12 +65,12 @@
             </form>
           </div>
         </div>
-        <div class="d-flex justify-content-center">
-          <button id="confirmUpload" class="btn btn-primary">확인</button>
+        <div class="d-flex justify-content-center mt-3">
+          <button id="confirmUpload" class="custom-btn">확인</button>
         </div>
       </section>
 
-      <!-- 서버 디컴파일 진행중 -->
+      <!-- 2) 처리 중 섹션 (변경 없음) -->
       <section id="processing-section" style="display: none">
         <div class="spinner-container">
           <div class="d-flex flex-column align-items-center">
@@ -54,56 +80,47 @@
         </div>
       </section>
 
-      <!-- 분석 옵션 선택 -->
-
-      <!-- 분석 결과 표시 -->
-      <!-- 분석 결과 및 다운로드 섹션 -->
+      <!-- 3) 결과 섹션 (여기에 Prism 적용 & CodeQL 하이라이트) -->
       <section id="result-section" style="display: none" class="mt-5">
-        <!-- 결과 섹션 전체를 중앙 정렬하는 Flex 컨테이너 -->
-        <div
-          style="
-            min-height: 70vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            width: 100%;
-          "
-        >
-          <h2 class="text-center">디컴파일된 코드</h2>
-          <!-- 코드 박스 컨테이너: 내부에 다운로드 버튼을 절대 위치로 배치 -->
-          <div
-            class="code-box-container"
-            style="position: relative; width: 80%"
-          >
-            <pre
-              id="analysisResult"
-              class="code-box"
-              style="margin: 0; padding: 20px; overflow: auto"
-            ></pre>
-            <!-- 다운로드 버튼: 코드 박스 내부 우측 상단 -->
-            <a
-              id="downloadLink"
-              class="btn btn-success"
-              href="#"
-              download
-              style="position: absolute; top: 10px; right: 10px"
-            >
-              코드 다운로드
-            </a>
+        <h2 class="text-center">디컴파일된 코드</h2>
+        <div class="code-box-container position-relative w-75 mx-auto">
+          <div class="code-header d-flex justify-content-between align-items-center">
+            <span class="language-label">C</span>
+            <div class="header-right">
+              <!-- ID와 onclick은 그대로 두고, script.js에서 runCodeQL 함수를 정의합니다 -->
+              <button id="runCodeQL" class="custom-btn" onclick="runCodeQL()">
+                codeql
+              </button>
+              <button class="download-btn" onclick="downloadCode()">
+                download
+              </button>
+            </div>
           </div>
-          <!-- 하단에 분석 옵션 버튼들을 중앙 정렬 -->
-          <div
-            class="center-buttons mt-3"
-            style="display: flex; justify-content: center; gap: 20px"
+
+          <!-- ★ Prism 용 클래스·속성 추가 ★ -->
+          <pre
+            id="source-code"
+            class="code-box language-c line-numbers"
+            data-line=""
+            style="margin:0; padding:20px; overflow:auto;"
           >
-            <button id="runCodeQL" class="btn btn-info">CodeQL 분석</button>
-            <button id="runFuzzing" class="btn btn-warning">퍼징 실행</button>
-          </div>
+<code id="analysisResult" class="language-c">{{ decompiled_code|escape }}</code>
+          </pre>
+
+          <!-- CodeQL JSON 결과를 이 아래에 렌더합니다 -->
+          <div id="vuln-results" class="mt-4"></div>
         </div>
       </section>
     </div>
 
-    <script src="/static/js/script.js"></script>
+    <!-- Prism core + 플러그인 순서대로 로드 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/line-numbers/prism-line-numbers.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/line-highlight/prism-line-highlight.min.js"></script>
+    <!-- C 문법 하이라이트 정의 -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-c.min.js"></script>
+
+    <!-- 기존 스크립트 + CodeQL 하이라이트 로직 -->
+    <script src="{% static 'js/script.js' %}"></script>
   </body>
 </html>

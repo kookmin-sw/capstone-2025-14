@@ -21,6 +21,7 @@ from capstone import views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('capstone/', views.index, name='index'),
-    path('api/decompile/',views.decompiled, name='decompiled'),
-    path("api/download/<str:filename>/", views.download_decompiled_file, name="download_decompiled_file"),
+    path('capstone/api/decompile/', views.decompiled, name='decompiled'),
+    path('capstone/api/download/<str:filename>/', views.download, name='download_decompiled_file'),
+    path('capstone/api/codeql/<str:filename>/',views.codeql, name='codeql')
 ]

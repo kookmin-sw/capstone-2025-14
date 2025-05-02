@@ -1,19 +1,18 @@
 import os
-import subprocess
-import json
-from django.http import JsonResponse, HttpResponse
+from django.http import HttpResponse, Http404
 from django.views.decorators.csrf import csrf_exempt
-from django.core.files.storage import default_storage
-from django.core.files.base import ContentFile
+from django.conf import settings
 
 @csrf_exempt
 def download_decompiled_file(request, filename):
-    file_path = os.path.join("media/uploads", filename)
-
+    # MEDIA_ROOT/downloads 폴더의 절대 경로 구성
+    file_path = os.path.join(settings.MEDIA_ROOT, "downloads", filename)
+    
     if os.path.exists(file_path):
+        # 이진 모드로 파일을 읽어 다운로드 응답 생성
         with open(file_path, "rb") as f:
             response = HttpResponse(f.read(), content_type="text/plain")
             response["Content-Disposition"] = f'attachment; filename="{filename}"'
             return response
-
-    return JsonResponse({"error": "File not found"}, status=404)
+    else:
+        raise Http404("File not found")
