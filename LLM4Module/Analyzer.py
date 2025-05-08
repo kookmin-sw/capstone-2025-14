@@ -3,6 +3,7 @@ from collections import deque
 import re, os, csv, string, struct
 from transformers import AutoTokenizer, AutoModelForCausalLM
 from elftools.elf.elffile import ELFFile
+from config import *
 
 class AssemblyAnalyzer:
     def __init__(self, file_path: str):
@@ -645,8 +646,8 @@ class GhidraAnalyzer:
 
 if __name__ == "__main__":
     analyzer = GhidraAnalyzer(file_path="sample/off_by_one_001",
-                              ghidra_path="/home/user/ghidra_11.0.3_PUBLIC/support/analyzeHeadless",
-                              decompile_script="decompile.py",
-                              parse_script="parse_global.py")
+                              ghidra_path=GHIDRA_PATH,
+                              decompile_script=DECOMPILE_SCRIPT_PATH,
+                              parse_script=PARSE_SCRIPT_PATH)
     
     analyzer.decompile()
