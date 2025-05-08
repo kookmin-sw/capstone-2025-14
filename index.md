@@ -1,37 +1,45 @@
-## Welcome to GitHub Pages
+# 🧠 Automated Binary Vulnerability Analysis Using LLMs
 
-You can use the [editor on GitHub](https://github.com/kookmin-sw/cap-template/edit/master/index.md) to maintain and preview the content for your website in Markdown files.
+**LLM을 이용하여 컴파일된 바이너리를 실행 가능한 형태의 소스코드로 디컴파일하고, 이를 기반으로 CodeQL과 Taint 분석을 자동화해주는 도구입니다.**
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+**Team Codebugger**
 
-### Markdown
+---
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+## 📌 프로젝트 개요
 
-```markdown
-Syntax highlighted code block
+### 🔍 문제 정의
+기존 디컴파일러(IDA Pro, Binary Ninja)는 비용이 매우 높거나, 무료 도구(Ghidra 등)는 재실행 가능한 형태의 코드가 아닌 단순한 pseudo-code 수준의 결과만 제공합니다.  
+이로 인해 디컴파일된 코드를 기반으로 정적 분석(CodeQL) 및 동적 분석(AFL Fuzzer)을 적용하기 어려웠습니다.
 
-# Header 1
-## Header 2
-### Header 3
+### 💡 해결 방법
+본 프로젝트는 **LLM4Decompile** 모델을 활용하여 함수 단위의 어셈블리어 혹은 Ghidra 디컴파일 결과를 LLM에 입력하고, 실행 가능한 형태의 C 소스코드로 디컴파일합니다.
 
-- Bulleted
-- List
+- 전역 변수 등의 정보는 LLM이 완전하게 추론할 수 없기 때문에, 별도로 분석/추출하여 디컴파일된 함수들과 조합해 최종 실행 가능한 소스코드를 생성합니다.
+- 생성된 코드는 CodeQL 정적 분석 및 Taint 분석에 즉시 활용 가능하며, 분석 결과는 시각적으로 확인할 수 있습니다.
 
-1. Numbered
-2. List
+---
 
-**Bold** and _Italic_ and `Code` text
+## 🔧 기술 스택 및 도구
 
-[Link](url) and ![Image](src)
-```
+- **언어**: Python, JavaScript, HTML, CSS  
+- **프레임워크**: Django  
+- **사용 도구**:
+  - Ghidra
+  - OBJdump
+  - gcc
+  - CodeQL
+  - LLM4Decompile
 
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
+---
 
-### Jekyll Themes
+## 🚀 주요 기능
 
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/kookmin-sw/cap-template/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
+| 기능 | 설명 |
+| :-- | :-- |
+| 🔼 바이너리 업로드 | 사용자가 분석하고자 하는 바이너리를 업로드 |
+| 🧩 디컴파일 | Ghidra 혹은 objdump를 통해 추출한 함수 단위의 코드와 전역 변수를 LLM을 통해 실행 가능한 형태의 C 코드로 디컴파일 |
+| 📊 CodeQL 분석 | 디컴파일된 코드를 정적으로 분석하여 취약점을 자동 탐지 |
+| 🧬 Taint 분석 | CodeQL 기반의 Taint 분석 수행 및 결과 제공 |
 
-### Support or Contact
-
-Having trouble with Pages? Check out our [documentation](https://help.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.
+---
