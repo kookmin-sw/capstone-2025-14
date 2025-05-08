@@ -94,7 +94,19 @@ python3 manage.py runserver [ip 주소] [port 번호]
 
 ---
 
+## 평가지표
+본 프로젝트의 성능 및 정확도는 다음 두 가지 지표를 통해 평가하였습니다.
+디컴파일된 코드의 재실행 가능성과 CodeQL 및 Taint 분석 도구의 적용 성공률을 기반으로 평가됩니다. 높은 재실행 가능성과 분석 호환성을 확보하여, 자동화된 바이너리 취약점 분석의 실용성을 입증했습니다. 또한 다양한 취약점 유형(CWE 기준)에 대해 탐지율을 측정하였습니다. CodeQL 및 Taint 분석 결과를 바탕으로, 디컴파일된 코드에서도 기존 소스코드 수준에 준하는 탐지 성능을 확인했습니다.  
+특히, 메모리 오류(버퍼 오버플로우), 사용자 입력 검증 부족 등의 취약점에서 높은 탐지율을 기록하였습니다.
 
+
+<p align="center">
+  <img src="https://github.com/kookmin-sw/capstone-2025-14/blob/master/images/vuln.png?raw=true" alt="취약점 유형별 탐지율" width="600">
+</p>
+
+<p align="center">
+  <img src="https://github.com/kookmin-sw/capstone-2025-14/blob/master/images/poster.png?raw=true" alt="프로젝트 포스터" width="700">
+</p>
 
 
 ## 🖼️ 프로젝트 포스터
