@@ -1,77 +1,82 @@
-[![Review Assignment Due Date](https://classroom.github.com/assets/deadline-readme-button-22041afd0340ce965d47ae6ef1cefeee28c7c493a6346c4f15d667ab976d596c.svg)](https://classroom.github.com/a/gFPznrUY)
-# Welcome to GitHub
+# 🧠 Automated Binary Vulnerability Analysis Using LLMs
 
-캡스톤 팀 생성을 축하합니다.
+LLM을 이용하여 컴파일된 바이너리를 실행 가능한 형태의 소스코드로 디컴파일하고, 이를 기반으로 CodeQL과 Taint 분석을 자동화해주는 도구입니다.
 
-## 팀소개 및 페이지를 꾸며주세요.
+> **Team Codebugger**
 
-- 프로젝트 소개
-  - 프로젝트 설치방법 및 데모, 사용방법, 프리뷰등을 readme.md에 작성.
-  - Api나 사용방법등 내용이 많을경우 wiki에 꾸미고 링크 추가.
+---
 
-- 팀페이지 꾸미기
-  - 프로젝트 소개 및 팀원 소개
-  - index.md 예시보고 수정.
+## 📌 프로젝트 개요
 
-- GitHub Pages 리파지토리 Settings > Options > GitHub Pages 
-  - Source를 marster branch
-  - Theme Chooser에서 태마선택
-  - 수정후 팀페이지 확인하여 점검.
+### 🔍 문제 정의
 
-**팀페이지 주소** -> https://kookmin-sw.github.io/ '{{자신의 리파지토리 아이디}}'
+기존 디컴파일러(IDA Pro, Binary Ninja)는 비용이 매우 높거나, 무료 도구(Ghidra 등)는 재실행 가능한 형태의 코드가 아닌 단순한 pseudo-code 수준의 결과만 제공합니다. 이로 인해 디컴파일된 코드를 기반으로 정적 분석(CodeQL) 및 동적 분석(AFL Fuzzer)을 적용하기 어려웠습니다.
 
-**예시)** 2023년 0조  https://kookmin-sw.github.io/capstone-2023-00/
+### 💡 해결 방법
 
+본 프로젝트는 LLM4Decompile 모델을 활용하여 함수 단위의 어셈블리어 혹은 Ghidra 디컴파일 결과를 LLM에 입력하고, 실행 가능한 형태의 C 소스코드로 디컴파일합니다.  
+- 전역 변수 등의 정보는 LLM이 완전하게 추론할 수 없기 때문에, 이를 별도로 분석/추출하여 디컴파일된 함수들과 조합해 최종 실행 가능한 소스코드를 생성합니다.  
+- 생성된 코드는 CodeQL 정적 분석 및 Taint 분석에 즉시 활용 가능하며, 분석 결과는 시각적으로 확인할 수 있습니다.
 
-## 내용에 아래와 같은 내용들을 추가하세요.
+---
 
-### 1. 프로잭트 소개
+## 🔧 기술 스택 및 도구
 
-프로젝트
+- 언어: Python, JavaScript, HTML, CSS  
+- 프레임워크: Django  
+- 사용 도구:  
+  - Ghidra  
+  - OBJdump  
+  - gcc  
+  - CodeQL  
+  - LLM4Decompile
 
-### 2. 소개 영상
+---
 
-프로젝트 소개하는 영상을 추가하세요
+## 🚀 주요 기능
 
-### 3. 팀 소개
+| 기능 | 설명 |
+|------|------|
+| 🔼 바이너리 업로드 | 사용자가 분석하고자 하는 바이너리를 업로드 |
+| 🧩 디컴파일 | Ghidra 혹은 objdump를 통해 추출한 함수 단위의 코드와 전역 변수를 LLM을 통해 실행 가능한 형태의 C 코드로 디컴파일 |
+| 📊 CodeQL 분석 | 디컴파일된 코드를 정적으로 분석하여 취약점을 자동 탐지 |
+| 🧬 Taint 분석 | CodeQL 기반의 Taint 분석 수행 및 결과 제공 |
 
-팀을 소개하세요.
+---
 
-팀원정보 및 담당이나 사진 및 SNS를 이용하여 소개하세요.
+## 🛠️ 사용 방법
 
-### 4. 사용법
+### 설치 및 환경 구성
 
-소스코드제출시 설치법이나 사용법을 작성하세요.
-
-### 5. 기타
-
-추가적인 내용은 자유롭게 작성하세요.
-
-
-## Markdown을 사용하여 내용꾸미기
-
-Markdown은 작문을 스타일링하기위한 가볍고 사용하기 쉬운 구문입니다. 여기에는 다음을위한 규칙이 포함됩니다.
-
-```markdown
-Syntax highlighted code block
-
-# Header 1
-## Header 2
-### Header 3
-
-- Bulleted
-- List
-
-1. Numbered
-2. List
-
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
+```bash
+git clone https://github.com/kookmin-sw/capstone-2025-14  
+cd settings  
+./codeqlInstall.sh  
+./GhidraModelInstall.sh
 ```
-![dJango](https://img.shields.io/badge/Django-092E20?style=for-the-badge&logo=django&logoColor=white)
-자세한 내용은 [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
+### 실행 방법
+```bash
+cd project  
+python3 manage.py runserver [ip 주소] [port 번호]
+```
+---
 
-### Support or Contact
+## 👨‍👩‍👧‍👦 팀원 소개
 
-readme 파일 생성에 추가적인 도움이 필요하면 [도움말](https://help.github.com/articles/about-readmes/) 이나 [contact support](https://github.com/contact) 을 이용하세요.
+| 이름 | 역할 |
+|------|------|
+| 황승재 | PM, 모듈 개발 |
+| 신윤제 | CodeQL, LLM 디컴파일 모듈 개발 |
+| 최원준 | 백엔드 및 프론트엔드 개발 |
+
+---
+
+## 📈 향후 계획
+
+- AFL 기반의 동적 분석 모듈 연동  
+- 전역 변수 및 구조체 자동 복원 정확도 향상  
+- 다양한 LLM 모델 비교 및 성능 평가  
+- 분석 리포트 자동 생성 기능 추가  
+
+---
+
