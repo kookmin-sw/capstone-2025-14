@@ -60,8 +60,14 @@ python3 manage.py runserver [ip 주소] [port 번호]
 ---
 
 ## ⚙️ 시스템 아키텍처
-![image]()
 
+<div align="center">
+  <img 
+    src="https://github.com/kookmin-sw/capstone-2025-14/blob/master/images/architecture.png" 
+    alt="System Architecture" 
+    width="600" 
+  />
+</div>
 
 ---
 
