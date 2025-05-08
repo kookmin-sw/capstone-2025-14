@@ -1,8 +1,6 @@
 # 🧠 Automated Binary Vulnerability Analysis Using LLMs
 
-LLM을 이용하여 컴파일된 바이너리를 실행 가능한 형태의 소스코드로 디컴파일하고, 이를 기반으로 CodeQL과 Taint 분석을 자동화해주는 도구입니다.
-
-> **Team Codebugger**
+> LLM을 이용하여 컴파일된 바이너리를 실행 가능한 형태의 소스코드로 디컴파일하고, 이를 기반으로 CodeQL과 Taint 분석을 자동화해주는 도구입니다.
 
 ---
 
@@ -61,12 +59,18 @@ python3 manage.py runserver [ip 주소] [port 번호]
 ```
 ---
 
+## ⚙️ 시스템 아키텍처
+![image]()
+
+
+---
+
 ## 👨‍👩‍👧‍👦 팀원 소개
 
 | 이름 | 역할 |
 |------|------|
-| 황승재 | PM, 모듈 개발 |
-| 신윤제 | CodeQL, LLM 디컴파일 모듈 개발 |
+| 황승재 | PM, CodeQL, LLM 디컴파일 개발 |
+| 신윤제 | CodeQL, LLM 디컴파일 개발 |
 | 최원준 | 백엔드 및 프론트엔드 개발 |
 
 ---
