@@ -1,12 +1,12 @@
 # 🧠 Automated Binary Vulnerability Analysis Using LLMs
-
+---
 **LLM을 이용하여 컴파일된 바이너리를 실행 가능한 형태의 소스코드로 디컴파일하고, 이를 기반으로 CodeQL과 Taint 분석을 자동화해주는 도구입니다.**
 
 **Team Codebugger**
 
----
 
 ## 📌 프로젝트 개요
+---
 
 ### 🔍 문제 정의
 기존 디컴파일러(IDA Pro, Binary Ninja)는 비용이 매우 높거나, 무료 도구(Ghidra 등)는 재실행 가능한 형태의 코드가 아닌 단순한 pseudo-code 수준의 결과만 제공합니다.  
@@ -18,9 +18,11 @@
 - 전역 변수 등의 정보는 LLM이 완전하게 추론할 수 없기 때문에, 별도로 분석/추출하여 디컴파일된 함수들과 조합해 최종 실행 가능한 소스코드를 생성합니다.
 - 생성된 코드는 CodeQL 정적 분석 및 Taint 분석에 즉시 활용 가능하며, 분석 결과는 시각적으로 확인할 수 있습니다.
 
----
+
 
 ## 🔧 기술 스택 및 도구
+---
+
 
 - **언어**: Python, JavaScript, HTML, CSS  
 - **프레임워크**: Django  
@@ -31,10 +33,9 @@
   - CodeQL
   - LLM4Decompile
 
----
 
 ## 🚀 주요 기능
-
+---
 | 기능 | 설명 |
 | :-- | :-- |
 | 🔼 바이너리 업로드 | 사용자가 분석하고자 하는 바이너리를 업로드 |
@@ -42,4 +43,7 @@
 | 📊 CodeQL 분석 | 디컴파일된 코드를 정적으로 분석하여 취약점을 자동 탐지 |
 | 🧬 Taint 분석 | CodeQL 기반의 Taint 분석 수행 및 결과 제공 |
 
----
+
+
+🖼️ 프로젝트 포스터
+<p align="center"> <img src="images/poster.png" alt="프로젝트 포스터" width="700"> </p> 
