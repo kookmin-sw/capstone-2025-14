@@ -69,7 +69,7 @@ Syntax highlighted code block
 
 [Link](url) and ![Image](src)
 ```
-
+![dJango](https://img.shields.io/badge/Django-092E20?style=for-the-badge&logo=django&logoColor=white)
 자세한 내용은 [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
 
 ### Support or Contact
