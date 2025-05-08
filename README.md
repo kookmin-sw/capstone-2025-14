@@ -1,6 +1,6 @@
 # 🧠 Automated Binary Vulnerability Analysis Using LLMs
 
-> LLM을 이용하여 컴파일된 바이너리를 실행 가능한 형태의 소스코드로 디컴파일하고, 이를 기반으로 CodeQL과 Taint 분석을 자동화해주는 도구입니다.
+<mark>LLM을 이용하여 컴파일된 바이너리를 **실행 가능한 소스코드**로 디컴파일하고, 이를 바탕으로 **CodeQL**·**Taint 분석**을 자동화하는 도구입니다.</mark>
 
 ---
 
