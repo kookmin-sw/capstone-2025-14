@@ -27,11 +27,11 @@
 )  
 
 ### Tool
-[![Ghidra](https://img.shields.io/badge/Ghidra-reverse_engineering-red)](https://github.com/NationalSecurityAgency/ghidra)  
+[![Ghidra](https://img.shields.io/badge/Ghidra-decompiler-red)](https://github.com/NationalSecurityAgency/ghidra)  
 [![OBJdump](https://img.shields.io/badge/OBJdump-disassembler-blue)](https://www.gnu.org/software/binutils/)  
 [![GCC](https://img.shields.io/badge/GCC-compiler-blue)](https://gcc.gnu.org/)  
 [![CodeQL](https://img.shields.io/badge/CodeQL-security-green)](https://github.com/github/codeql)  
-[![LLM4Decompile](https://img.shields.io/badge/LLM4Decompile-decompiler-purple)](https://github.com/llm4decompile/)
+[![LLM4Decompile](https://img.shields.io/badge/LLM4Decompile-LLM_Model-purple)]([https://github.com/llm4decompile/](https://github.com/albertan017/LLM4Decompile))
 
 ---
 
