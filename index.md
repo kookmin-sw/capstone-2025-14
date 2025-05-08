@@ -105,7 +105,7 @@ python3 manage.py runserver [ip 주소] [port 번호]
 </p>
 
 <p align="center">
-  <img src="https://github.com/kookmin-sw/capstone-2025-14/blob/master/images/poster.png?raw=true" alt="프로젝트 포스터" width="700">
+  <img src="https://github.com/kookmin-sw/capstone-2025-14/blob/master/images/rq.png?raw=true" alt="프로젝트 포스터" width="700">
 </p>
 
 
