@@ -20,14 +20,15 @@
 
 ## 🔧 기술 스택 및 도구
 
-- 언어: Python, JavaScript, HTML, CSS  
-- 프레임워크: Django  
+- 언어: ![python](https://img.shields.io/badge/Python-14354C?style=for-the-badge&logo=python&logoColor=white) ![javascript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=JavaScript&logoColor=white) ![html](https://img.shields.io/badge/HTML-239120?style=for-the-badge&logo=html5&logoColor=white) ![css](https://img.shields.io/badge/CSS-239120?&style=for-the-badge&logo=css3&logoColor=white)  
+- 프레임워크: ![dJango](https://img.shields.io/badge/Django-092E20?style=for-the-badge&logo=django&logoColor=white
+)  
 - 사용 도구:  
-  - Ghidra  
-  - OBJdump  
-  - gcc  
-  - CodeQL  
-  - LLM4Decompile
+  - [![Ghidra](https://img.shields.io/badge/Ghidra-reverse_engineering-red)](https://github.com/NationalSecurityAgency/ghidra)  
+  - [![OBJdump](https://img.shields.io/badge/OBJdump-disassembler-blue)](https://www.gnu.org/software/binutils/)  
+  - [![GCC](https://img.shields.io/badge/GCC-compiler-blue)](https://gcc.gnu.org/)  
+  - [![CodeQL](https://img.shields.io/badge/CodeQL-security-green)](https://github.com/github/codeql)  
+  - [![LLM4Decompile](https://img.shields.io/badge/LLM4Decompile-decompiler-purple)](https://github.com/llm4decompile/)
 
 ---
 
