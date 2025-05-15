@@ -46,7 +46,7 @@
 
 ---
 
-## 📋 Covered CWEs
+## 🛡️ List of Covered CWEs
 
 <details>
 <summary>Show Covered CWEs</summary>
