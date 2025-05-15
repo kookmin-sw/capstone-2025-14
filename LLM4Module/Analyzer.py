@@ -620,6 +620,8 @@ class GhidraAnalyzer:
                 elif sec_name in ('.bss', '.tbss'):
                     if decl is None and size == 4:
                         decl = f'int {name};'
+                    elif decl is None and size == 8:
+                        decl = f'long {name};'
                     else:
                         decl = f'char {name}[{size}];'
 
