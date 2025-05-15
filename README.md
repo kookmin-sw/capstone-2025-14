@@ -295,6 +295,17 @@ python3 manage.py runserver [ip 주소] [port 번호]
 
 ---
 
+## ↖ Code Flow
+<div align="center">
+  <img 
+    src="https://github.com/kookmin-sw/capstone-2025-14/blob/master/images/flow.png" 
+    alt="Code Flow" 
+    width="600" 
+  />
+</div>
+
+---
+
 ## 👨‍👩‍👧‍👦 팀원 소개
 
 | 이름 | 역할 |
