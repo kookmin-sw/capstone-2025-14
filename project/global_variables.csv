@@ -1,8 +1,0 @@
-name,address,type,size
-Elf64_Phdr_ARRAY_00100040,0x00100040,Elf64_Phdr[13],728
-NoteGnuProperty_4_00100338,0x00100338,NoteGnuProperty_4,16
-__abi_tag,0x0010038c,NoteAbiTag,32
-__dso_handle,0x00104008,pointer,8
-_edata,0x00104010,undefined8,8
-completed.0,0x00104028,undefined1,1
-Elf64_Shdr_ARRAY__elfSectionHeaders__00000000,0x_elfSectionHeaders::00000000,Elf64_Shdr[31],1984
