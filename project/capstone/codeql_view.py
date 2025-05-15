@@ -1,5 +1,6 @@
 import os
 import csv
+import threading
 from django.http import JsonResponse
 from config import *
 import sys
@@ -8,6 +9,10 @@ from LLM4Module.codeql import *
 
 # 한 번 분석한 파일명을 저장할 집합
 processed_codeql_files = set()
+# 파일명별 Lock 저장
+_codeql_locks = {}
+# Lock 사전 접근 보호
+_locks_guard = threading.Lock()
 
 columns = ["Name", "Description", "Severity", "Message", 
            "Path", "Start line", "Start column", 
@@ -17,7 +22,6 @@ def codeql_result(request, filename):
     if request.method != "POST":
         return JsonResponse({"error": "POST 요청만 가능합니다!"}, status=405)
 
-    # 입력/출력 경로 설정
     input_file = f"{filename}.c"
     input_root = INPUT_ROOT
     output_dir = CODEQL_OUTPUT_DIR
@@ -26,15 +30,30 @@ def codeql_result(request, filename):
     csv_name = f"{filename}_security.csv"
     csv_path = os.path.join(output_dir, csv_name)
 
-    # 아직 한 번도 처리된 적이 없으면 무조건 CodeQL 실행
-    if filename not in processed_codeql_files:
-        codeql = CodeQL(
-            source_file=input_file,
-            source_root=input_root,
-            result_dir=output_dir
+    # ==== 동시 요청 방지 ====
+    with _locks_guard:
+        lock = _codeql_locks.setdefault(filename, threading.Lock())
+    if not lock.acquire(blocking=False):
+        return JsonResponse(
+            {"error": "이미 분석 중입니다. 잠시 후 다시 시도하세요."},
+            status=429
         )
-        codeql.run(0)
-        processed_codeql_files.add(filename)
+
+    # 아직 한 번도 처리된 적이 없으면 CodeQL 실행
+    if filename not in processed_codeql_files:
+        try:
+            codeql = CodeQL(
+                source_file=input_file,
+                source_root=input_root,
+                result_dir=output_dir
+            )
+            codeql.run(0)
+            processed_codeql_files.add(filename)
+        finally:
+            lock.release()
+    else:
+        # 이미 완료된 경우 lock 해제
+        lock.release()
 
     # CSV 파일을 읽어서 JSON으로 반환
     parsed_data = []
