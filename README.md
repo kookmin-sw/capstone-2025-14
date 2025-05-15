@@ -48,49 +48,221 @@
 
 ## 🛡️ List of Covered CWEs
 
-| CWE     | Type                                                              | Description                                                                                |
-|-----------------|-------------------------------------------------------------------|------------------------------------------------------------------------------------|
-| CWE-014 | Compiler Removal of Code to Clear Buffers                          | 최적화 컴파일러가 민감 데이터 삭제용 코드를 제거하여 메모리에 민감 데이터가 남아 있게 되는 취약점          |
-| CWE-020 | Improper Input Validation                                          | 입력값을 올바르게 검증하지 않아 예기치 않은 동작이나 보안 결함으로 이어지는 취약점                         |
-| CWE-022 | Improper Limitation of a Pathname to a Restricted Directory        | 경로 조작(path traversal) 공격을 통해 허가되지 않은 디렉터리/파일에 접근할 수 있는 취약점                    |
-| CWE-078 | OS Command Injection                                               | 외부 입력을 통해 운영체제 명령 실행을 허용하여 임의 명령이 수행될 수 있는 취약점                            |
-| CWE-079 | Cross-site Scripting (XSS)                                         | 입력값에 스크립트를 삽입해 다른 사용자의 브라우저에서 실행되도록 하는 취약점                              |
-| CWE-089 | SQL Injection                                                      | 입력값으로 악의적 SQL 구문을 삽입하여 데이터베이스를 조작·유출할 수 있는 취약점                           |
-| CWE-114 | Process Control                                                    | 외부로부터 조작된 경로를 이용해 악성 모듈을 로드할 수 있는 취약점                                       |
-| CWE-119 | Improper Restriction of Operations within the Bounds of a Buffer   | 버퍼 오버플로우 등 메모리 경계를 넘어선 읽기/쓰기를 허용하는 취약점                                    |
-| CWE-120 | Buffer Copy without Checking Size of Input                         | 복사할 데이터 크기를 검사하지 않고 버퍼 복사를 수행해 오버플로우를 유발하는 취약점                         |
-| CWE-121 | Stack-based Buffer Overflow                                        | 스택 영역 버퍼 오버플로우로 인해 제어 흐름이 변조될 수 있는 취약점                                     |
-| CWE-129 | Improper Validation of Array Index                                 | 배열 인덱스를 경계 외 값으로 접근할 수 있어 메모리 손상이나 정보 유출이 발생하는 취약점                    |
-| CWE-131 | Incorrect Calculation of Buffer Size                               | 버퍼 크기를 잘못 계산해 메모리 할당이 부족하거나 과다할 때 발생하는 취약점                               |
-| CWE-134 | Uncontrolled Format String                                         | 포맷 문자열 함수에 공격자가 제어 가능한 입력을 넘겨 포맷(vulnerable format)을 조작할 수 있는 취약점        |
-| CWE-170 | Improper Null Termination                                          | 문자열 종료 문자(`\0`)를 올바르게 처리하지 못해 버퍼 경계를 벗어나는 취약점                             |
-| CWE-190 | Integer Overflow or Wraparound                                     | 정수 계산 결과가 최대값을 넘어서거나 래핑되어 오류가 발생하는 취약점                                     |
-| CWE-191 | Integer Underflow (Wrap or Wraparound)                             | 정수 계산 결과가 최소값 아래로 내려가거나 래핑되어 오류가 발생하는 취약점                               |
-| CWE-193 | Off-by-one Error                                                   | 반복문 경계 조건이 하나 모자라거나 남아 잘못된 메모리 접근을 유발하는 취약점                             |
-| CWE-253 | Incorrect Check of Function Return Value                           | 함수 반환값을 잘못 검사하거나 무시하여 오류 상태를 놓치는 취약점                                       |
-| CWE-290 | Authentication Bypass by Spoofing                                  | 스푸핑 등을 이용해 인증을 우회할 수 있는 취약점                                                      |
-| CWE-295 | Improper Certificate Validation                                    | SSL/TLS 인증서 검증을 제대로 수행하지 않아 위조된 인증서를 신뢰하게 되는 취약점                        |
-| CWE-311 | Missing Encryption of Sensitive Data                               | 민감 데이터를 암호화하지 않고 전송해 중간에 탈취될 수 있는 취약점                                      |
-| CWE-313 | Cleartext Storage of Sensitive Information                         | 민감 정보를 암호화 없이 저장해 디스크 탈취 시 노출되는 취약점                                         |
-| CWE-319 | Cleartext Transmission of Sensitive Information                    | 민감 정보를 암호화 없이 전송해 네트워크 상에서 탈취될 수 있는 취약점                                    |
-| CWE-326 | Inadequate Encryption Strength                                     | 약한 암호화 알고리즘 사용으로 암호문이 비교적 쉽게 해독될 수 있는 취약점                               |
-| CWE-327 | Use of a Broken or Risky Cryptographic Algorithm                   | 알려진 취약점이 있는 암호 알고리즘을 사용하는 취약점                                                  |
-| CWE-367 | Time-of-Check Time-of-Use (TOCTOU) Race Condition                  | 검사 시점과 사용 시점 사이의 경쟁 조건으로 권한 우회나 데이터 무결성 손상이 발생하는 취약점               |
-| CWE-416 | Use After Free                                                    | 해제된 메모리를 다시 접근·사용하여 충돌이나 코드 실행이 가능한 취약점                                |
-| CWE-428 | Untrusted Search Path                                              | 라이브러리·모듈 로드 시 경로 신뢰성을 검사하지 않아 악성 코드를 로드할 수 있는 취약점                   |
-| CWE-457 | Use of Uninitialized Variable                                      | 초기화되지 않은 변수를 사용해 예측 불가능한 동작이나 정보 유출이 발생하는 취약점                        |
-| CWE-468 | Incorrect Pointer Scaling                                          | 포인터 산술 연산 시 크기 단위를 잘못 적용해 잘못된 메모리 접근이 발생하는 취약점                        |
-| CWE-497 | Exposure of System Data to an Unauthorized Control Sphere          | 시스템 내부 정보를 외부에 과도하게 노출하는 취약점                                                   |
-| CWE-570 | Expression is Always False                                         | 항상 거짓으로 평가되는 논리 표현식으로 인해 코드가 실행되지 않거나 불필요한 분기 검사가 발생하는 취약점   |
-| CWE-611 | Improper Restriction of XML External Entity Reference (XXE)        | 외부 엔터티(XML External Entity)를 잘못 처리해 SSRF나 파일 유출이 가능한 취약점                        |
-| CWE-676 | Use of Potentially Dangerous Function                              | 보안상 위험한 함수(e.g. `strcpy`, `gets`)를 사용하는 취약점                                          |
-| CWE-704 | Incorrect Type Conversion or Cast                                  | 잘못된 형 변환/캐스트로 인한 데이터 손상 또는 오류가 발생하는 취약점                                 |
-| CWE-732 | Incorrect Permission Assignment for Critical Resource              | 파일·리소스 권한을 과도하게 부여해 권한 상승이 가능한 취약점                                         |
-| CWE-764 | Multiple Locks of a Critical Resource                              | 동일 자원에 중복으로 잠금을 시도해 교착 상태(데드락)가 발생할 수 있는 취약점                           |
-| CWE-807 | Reliance on Untrusted Inputs in a Security Decision                | 보안 결정을 위해 신뢰할 수 없는 입력값을 사용하는 취약점                                              |
-| CWE-835 | Infinite Loop                                                     | 특정 조건에서 탈출되지 않는 무한 루프가 발생해 서비스 거부를 유발하는 취약점                            |
-| CWE-843 | Access of Resource Using Incompatible Type (‘Type Confusion’)       | 잘못된 타입으로 객체/리소스에 접근해 메모리 손상이나 권한 우회가 발생하는 취약점                       |
+<details>
+  <summary>Show Covered CWEs</summary>
 
+  <table>
+    <thead>
+      <tr>
+        <th>CWE</th>
+        <th>Type</th>
+        <th>Description</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>CWE-014</td>
+        <td>Compiler Removal of Code to Clear Buffers</td>
+        <td>최적화 컴파일러가 민감 데이터 삭제용 코드를 제거하여 메모리에 민감 데이터가 남아 있게 되는 취약점</td>
+      </tr>
+      <tr>
+        <td>CWE-020</td>
+        <td>Improper Input Validation</td>
+        <td>입력값을 올바르게 검증하지 않아 예기치 않은 동작이나 보안 결함으로 이어지는 취약점</td>
+      </tr>
+      <tr>
+        <td>CWE-022</td>
+        <td>Improper Limitation of a Pathname to a Restricted Directory</td>
+        <td>경로 조작(path traversal) 공격을 통해 허가되지 않은 디렉터리/파일에 접근할 수 있는 취약점</td>
+      </tr>
+      <tr>
+        <td>CWE-078</td>
+        <td>OS Command Injection</td>
+        <td>외부 입력을 통해 운영체제 명령 실행을 허용하여 임의 명령이 수행될 수 있는 취약점</td>
+      </tr>
+      <tr>
+        <td>CWE-079</td>
+        <td>Cross-site Scripting (XSS)</td>
+        <td>입력값에 스크립트를 삽입해 다른 사용자의 브라우저에서 실행되도록 하는 취약점</td>
+      </tr>
+      <tr>
+        <td>CWE-089</td>
+        <td>SQL Injection</td>
+        <td>입력값으로 악의적 SQL 구문을 삽입하여 데이터베이스를 조작·유출할 수 있는 취약점</td>
+      </tr>
+      <tr>
+        <td>CWE-114</td>
+        <td>Process Control</td>
+        <td>외부로부터 조작된 경로를 이용해 악성 모듈을 로드할 수 있는 취약점</td>
+      </tr>
+      <tr>
+        <td>CWE-119</td>
+        <td>Improper Restriction of Operations within the Bounds of a Buffer</td>
+        <td>버퍼 오버플로우 등 메모리 경계를 넘어선 읽기/쓰기를 허용하는 취약점</td>
+      </tr>
+      <tr>
+        <td>CWE-120</td>
+        <td>Buffer Copy without Checking Size of Input</td>
+        <td>복사할 데이터 크기를 검사하지 않고 버퍼 복사를 수행해 오버플로우를 유발하는 취약점</td>
+      </tr>
+      <tr>
+        <td>CWE-121</td>
+        <td>Stack-based Buffer Overflow</td>
+        <td>스택 영역 버퍼 오버플로우로 인해 제어 흐름이 변조될 수 있는 취약점</td>
+      </tr>
+      <tr>
+        <td>CWE-129</td>
+        <td>Improper Validation of Array Index</td>
+        <td>배열 인덱스를 경계 외 값으로 접근할 수 있어 메모리 손상이나 정보 유출이 발생하는 취약점</td>
+      </tr>
+      <tr>
+        <td>CWE-131</td>
+        <td>Incorrect Calculation of Buffer Size</td>
+        <td>버퍼 크기를 잘못 계산해 메모리 할당이 부족하거나 과다할 때 발생하는 취약점</td>
+      </tr>
+      <tr>
+        <td>CWE-134</td>
+        <td>Uncontrolled Format String</td>
+        <td>포맷 문자열 함수에 공격자가 제어 가능한 입력을 넘겨 포맷을 조작할 수 있는 취약점</td>
+      </tr>
+      <tr>
+        <td>CWE-170</td>
+        <td>Improper Null Termination</td>
+        <td>문자열 종료 문자(<code>\0</code>)를 올바르게 처리하지 못해 버퍼 경계를 벗어나는 취약점</td>
+      </tr>
+      <tr>
+        <td>CWE-190</td>
+        <td>Integer Overflow or Wraparound</td>
+        <td>정수 계산 결과가 최대값을 넘어서거나 래핑되어 오류가 발생하는 취약점</td>
+      </tr>
+      <tr>
+        <td>CWE-191</td>
+        <td>Integer Underflow (Wrap or Wraparound)</td>
+        <td>정수 계산 결과가 최소값 아래로 내려가거나 래핑되어 오류가 발생하는 취약점</td>
+      </tr>
+      <tr>
+        <td>CWE-193</td>
+        <td>Off-by-one Error</td>
+        <td>반복문 경계 조건이 하나 모자라거나 남아 잘못된 메모리 접근을 유발하는 취약점</td>
+      </tr>
+      <tr>
+        <td>CWE-253</td>
+        <td>Incorrect Check of Function Return Value</td>
+        <td>함수 반환값을 잘못 검사하거나 무시하여 오류 상태를 놓치는 취약점</td>
+      </tr>
+      <tr>
+        <td>CWE-290</td>
+        <td>Authentication Bypass by Spoofing</td>
+        <td>스푸핑 등을 이용해 인증을 우회할 수 있는 취약점</td>
+      </tr>
+      <tr>
+        <td>CWE-295</td>
+        <td>Improper Certificate Validation</td>
+        <td>SSL/TLS 인증서 검증을 제대로 수행하지 않아 위조된 인증서를 신뢰하게 되는 취약점</td>
+      </tr>
+      <tr>
+        <td>CWE-311</td>
+        <td>Missing Encryption of Sensitive Data</td>
+        <td>민감 데이터를 암호화하지 않고 전송해 중간에 탈취될 수 있는 취약점</td>
+      </tr>
+      <tr>
+        <td>CWE-313</td>
+        <td>Cleartext Storage of Sensitive Information</td>
+        <td>민감 정보를 암호화 없이 저장해 디스크 탈취 시 노출되는 취약점</td>
+      </tr>
+      <tr>
+        <td>CWE-319</td>
+        <td>Cleartext Transmission of Sensitive Information</td>
+        <td>민감 정보를 암호화 없이 전송해 네트워크 상에서 탈취될 수 있는 취약점</td>
+      </tr>
+      <tr>
+        <td>CWE-326</td>
+        <td>Inadequate Encryption Strength</td>
+        <td>약한 암호화 알고리즘 사용으로 암호문이 비교적 쉽게 해독될 수 있는 취약점</td>
+      </tr>
+      <tr>
+        <td>CWE-327</td>
+        <td>Use of a Broken or Risky Cryptographic Algorithm</td>
+        <td>알려진 취약점이 있는 암호 알고리즘을 사용하는 취약점</td>
+      </tr>
+      <tr>
+        <td>CWE-367</td>
+        <td>Time-of-Check Time-of-Use (TOCTOU) Race Condition</td>
+        <td>검사 시점과 사용 시점 사이의 경쟁 조건으로 권한 우회나 데이터 무결성 손상이 발생하는 취약점</td>
+      </tr>
+      <tr>
+        <td>CWE-416</td>
+        <td>Use After Free</td>
+        <td>해제된 메모리를 다시 접근·사용하여 충돌이나 코드 실행이 가능한 취약점</td>
+      </tr>
+      <tr>
+        <td>CWE-428</td>
+        <td>Untrusted Search Path</td>
+        <td>라이브러리·모듈 로드 시 경로 신뢰성을 검사하지 않아 악성 코드를 로드할 수 있는 취약점</td>
+      </tr>
+      <tr>
+        <td>CWE-457</td>
+        <td>Use of Uninitialized Variable</td>
+        <td>초기화되지 않은 변수를 사용해 예측 불가능한 동작이나 정보 유출이 발생하는 취약점</td>
+      </tr>
+      <tr>
+        <td>CWE-468</td>
+        <td>Incorrect Pointer Scaling</td>
+        <td>포인터 산술 연산 시 크기 단위를 잘못 적용해 잘못된 메모리 접근이 발생하는 취약점</td>
+      </tr>
+      <tr>
+        <td>CWE-497</td>
+        <td>Exposure of System Data to an Unauthorized Control Sphere</td>
+        <td>시스템 내부 정보를 외부에 과도하게 노출하는 취약점</td>
+      </tr>
+      <tr>
+        <td>CWE-570</td>
+        <td>Expression is Always False</td>
+        <td>항상 거짓으로 평가되는 논리 표현식으로 인해 분기가 실행되지 않거나 불필요한 검사가 발생하는 취약점</td>
+      </tr>
+      <tr>
+        <td>CWE-611</td>
+        <td>Improper Restriction of XML External Entity Reference (XXE)</td>
+        <td>외부 엔터티(XML External Entity)를 잘못 처리해 SSRF나 파일 유출이 가능한 취약점</td>
+      </tr>
+      <tr>
+        <td>CWE-676</td>
+        <td>Use of Potentially Dangerous Function</td>
+        <td>보안상 위험한 함수(e.g. <code>strcpy</code>, <code>gets</code>)를 사용하는 취약점</td>
+      </tr>
+      <tr>
+        <td>CWE-704</td>
+        <td>Incorrect Type Conversion or Cast</td>
+        <td>잘못된 형 변환/캐스트로 인한 데이터 손상 또는 오류가 발생하는 취약점</td>
+      </tr>
+      <tr>
+        <td>CWE-732</td>
+        <td>Incorrect Permission Assignment for Critical Resource</td>
+        <td>파일·리소스 권한을 과도하게 부여해 권한 상승이 가능한 취약점</td>
+      </tr>
+      <tr>
+        <td>CWE-764</td>
+        <td>Multiple Locks of a Critical Resource</td>
+        <td>동일 자원에 중복으로 잠금을 시도해 교착 상태(데드락)가 발생할 수 있는 취약점</td>
+      </tr>
+      <tr>
+        <td>CWE-807</td>
+        <td>Reliance on Untrusted Inputs in a Security Decision</td>
+        <td>보안 결정을 위해 신뢰할 수 없는 입력값을 사용하는 취약점</td>
+      </tr>
+      <tr>
+        <td>CWE-835</td>
+        <td>Infinite Loop</td>
+        <td>특정 조건에서 탈출되지 않는 무한 루프가 발생해 서비스 거부를 유발하는 취약점</td>
+      </tr>
+      <tr>
+        <td>CWE-843</td>
+        <td>Access of Resource Using Incompatible Type (‘Type Confusion’)</td>
+        <td>잘못된 타입으로 객체/리소스에 접근해 메모리 손상이나 권한 우회가 발생하는 취약점</td>
+      </tr>
+    </tbody>
+  </table>
+</details>
 
 ---
 
