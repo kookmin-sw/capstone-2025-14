@@ -298,7 +298,7 @@ python3 manage.py runserver [ip 주소] [port 번호]
 ## ↖ Code Flow
 <div align="center">
   <img 
-    src="https://github.com/kookmin-sw/capstone-2025-14/blob/master/images/flow.png" 
+    src="https://github.com/kookmin-sw/capstone-2025-14/blob/master/images/codeflow.png" 
     alt="Code Flow" 
     width="600" 
   />
