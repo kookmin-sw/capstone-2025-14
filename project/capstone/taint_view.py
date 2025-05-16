@@ -43,11 +43,12 @@ def taint_func(request, filename):
     if filename not in processed_taint_files:
         try:
             taint = CodeQL(
+                extended_csv=csv_name,
                 source_file=input_file,
                 source_root=input_root,
                 result_dir=output_dir
             )
-            taint.run(1)
+            taint.run(2)
             time.sleep(10)  # 분석 대기
             processed_taint_files.add(filename)
         finally:

@@ -43,6 +43,7 @@ def codeql_result(request, filename):
     if filename not in processed_codeql_files:
         try:
             codeql = CodeQL(
+                basic_csv=csv_name,
                 source_file=input_file,
                 source_root=input_root,
                 result_dir=output_dir
