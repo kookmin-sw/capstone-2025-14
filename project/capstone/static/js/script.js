@@ -219,6 +219,24 @@ function runCodeQL() {
     });
 }
 
+function downloadCode() {
+  // <pre> 안의 <code> 요소를 찾아서 그 안의 텍스트를 가져옴
+  const codeElement = document.querySelector("#analysisResult");
+  const codeText = codeElement ? codeElement.innerText.trim() : "";
+  const originalName = window.uploadedFileName || "code";
+  const downloadFileName = originalName + ".c";
+  // 텍스트 파일(blob) 생성 및 다운로드 실행
+  const blob = new Blob([codeText], { type: "text/plain" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = downloadFileName; // 다운로드할 파일명 지정
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+
 // === Taint 버튼 비활성화/활성화 추가 ===
 function runTaint() {
   if (!fileInput.files.length) {
