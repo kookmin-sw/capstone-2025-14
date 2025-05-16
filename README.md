@@ -343,6 +343,6 @@ python3 manage.py runserver [ip 주소] [port 번호]
 
 ## 자료
 
-[![PPT](https://github.com/kookmin-sw/capstone-2025-14/blob/master/ppt/2025_%EC%BA%A1%EC%8A%A4%ED%86%A4%EB%94%94%EC%9E%90%EC%9D%B8_v4.pdf)]()<br>
+[![PPT](https://img.shields.io/badge/PPT-purple)](https://github.com/kookmin-sw/capstone-2025-14/blob/master/ppt/2025_%EC%BA%A1%EC%8A%A4%ED%86%A4%EB%94%94%EC%9E%90%EC%9D%B8_v4.pdf)<br>
 [![Poster](https://img.shields.io/badge/Poster-green)](https://github.com/kookmin-sw/capstone-2025-14/blob/master/images/poster.png)
 
