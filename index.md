@@ -343,7 +343,7 @@ python3 manage.py runserver [ip 주소] [port 번호]
 ## 📁 프로젝트
 
 ### 📑 PPT
-[![PPT](https://img.shields.io/badge/PPT-purple)]()
+[![PPT](https://img.shields.io/badge/PPT-purple)](https://github.com/kookmin-sw/capstone-2025-14/blob/master/ppt/2025_%EC%BA%A1%EC%8A%A4%ED%86%A4%EB%94%94%EC%9E%90%EC%9D%B8_v4.pdf)
 
 ### 🖼️ 포스터
 <p align="center"> <img src="https://github.com/kookmin-sw/capstone-2025-14/blob/master/images/poster.png?raw=true" alt="프로젝트 포스터" width="700"> </p> 
